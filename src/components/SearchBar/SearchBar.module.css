@@ -1,0 +1,29 @@
+.root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75em;
+}
+
+.inputFrame {
+  display: flex;
+  align-items: center;
+  height: 42px;
+  padding: 0 1rem;
+  border-radius: 20px;
+  background-color: #fff;
+  justify-content: space-between;
+}
+
+.inputFrame > input {
+  border: none;
+}
+
+.root button {
+  background-color: transparent;
+}
+
+.labelBtn {
+  color: deepskyblue;
+  
+}
