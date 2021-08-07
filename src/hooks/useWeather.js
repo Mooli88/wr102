@@ -1,33 +1,51 @@
 import { useEffect, useState } from "react";
-import openWeatherApi, { getWeatherById } from "../services/openWeatherApi";
+import api from "../services/openWeatherApi";
 
-const UNITS = {
+export const UNITS = {
   METRIC: "metric",
   IMPERIAL: "imperial",
 };
 
-const DEFAULT_WEATHER_STATE = {
+const INIT_WEATHER_STATE = {
   id: null,
   name: "",
-  temp: "",
+  temp: "N/A",
   weather: {},
 };
 
+const ONE_MIN = 1000 * 60;
+
 const useWeather = () => {
-  const [weatherState, setWeatherState] = useState(DEFAULT_WEATHER_STATE);
+  const [weatherState, setWeatherState] = useState(INIT_WEATHER_STATE);
   const [unitsState, setUnitsState] = useState(UNITS.METRIC);
+  const [loadingState, setLoadingState] = useState(false);
 
   useEffect(() => {
     const { id } = weatherState;
-    if (id) getWeatherById(id, unitsState).then(setWeather);
+    if (id) {
+      getWeatherData(() => api.getWeatherById(id, unitsState));
+    }
   }, [unitsState]);
+
+  // Periodically fetch weather
+  useEffect(() => {
+    const { id } = weatherState;
+
+    if (!id) return;
+
+    const timeoutId = setTimeout(() => {
+      getWeatherData(() => api.getWeatherById(id, unitsState));
+    }, ONE_MIN * 60);
+
+    return () => clearTimeout(timeoutId);
+  }, [weatherState]);
 
   const setWeather = ({ id, name, weather, main: { temp } }) =>
     setWeatherState({
       id,
       name,
       temp,
-      weather: weather[0],
+      weather,
     });
 
   const changeUnits = () => {
@@ -35,16 +53,30 @@ const useWeather = () => {
     setUnitsState((units) => (units === METRIC ? IMPERIAL : METRIC));
   };
 
-  const getWeatherByCityName = async (options) => {
-    const data = await openWeatherApi.getWeatherByCityName({
+  const getWeatherData = async (cb) => {
+    try {
+      setLoadingState(true);
+      const data = await cb();
+      setWeather(data);
+    } catch (error) {
+      setWeatherState(INIT_WEATHER_STATE);
+      alert(error);
+    }
+    setLoadingState(false);
+  };
+
+  const getWeatherByCityName = (options) => {
+    const promise = api.getWeatherByCityName({
       ...options,
       units: unitsState,
     });
-    setWeather(data);
+    getWeatherData(() => promise);
   };
 
   return {
     weatherState,
+    unitsState,
+    loadingState,
     changeUnits,
     getWeatherByCityName,
   };
