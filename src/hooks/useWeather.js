@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
+import { useSettingCtx } from "../contexts/settingsContext";
 import api from "../services/openWeatherApi";
-
-export const UNITS = {
-  METRIC: "metric",
-  IMPERIAL: "imperial",
-};
 
 const INIT_WEATHER_STATE = {
   id: null,
@@ -17,15 +13,15 @@ const ONE_MIN = 1000 * 60;
 
 const useWeather = () => {
   const [weatherState, setWeatherState] = useState(INIT_WEATHER_STATE);
-  const [unitsState, setUnitsState] = useState(UNITS.METRIC);
   const [loadingState, setLoadingState] = useState(false);
+  const { units } = useSettingCtx();
 
   useEffect(() => {
     const { id } = weatherState;
     if (id) {
-      getWeatherData(() => api.getWeatherById(id, unitsState));
+      getWeatherData(() => api.getWeatherById(id, units));
     }
-  }, [unitsState]);
+  }, [units]);
 
   // Periodically fetch weather
   useEffect(() => {
@@ -34,7 +30,7 @@ const useWeather = () => {
     if (!id) return;
 
     const timeoutId = setTimeout(() => {
-      getWeatherData(() => api.getWeatherById(id, unitsState));
+      getWeatherData(() => api.getWeatherById(id, units));
     }, ONE_MIN * 60);
 
     return () => clearTimeout(timeoutId);
@@ -47,11 +43,6 @@ const useWeather = () => {
       temp,
       weather,
     });
-
-  const changeUnits = () => {
-    const { METRIC, IMPERIAL } = UNITS;
-    setUnitsState((units) => (units === METRIC ? IMPERIAL : METRIC));
-  };
 
   const getWeatherData = async (cb) => {
     try {
@@ -68,16 +59,14 @@ const useWeather = () => {
   const getWeatherByCityName = (options) => {
     const promise = api.getWeatherByCityName({
       ...options,
-      units: unitsState,
+      units,
     });
     getWeatherData(() => promise);
   };
 
   return {
     weatherState,
-    unitsState,
     loadingState,
-    changeUnits,
     getWeatherByCityName,
   };
 };
