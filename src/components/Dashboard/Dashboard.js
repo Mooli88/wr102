@@ -15,9 +15,7 @@ const Dashboard = () => {
       <div className={mainSection}>
         <ComponentTemp />
       </div>
-      <div>
-        <ComponentDetails />
-      </div>
+      <ComponentDetails />
     </div>
   );
 };

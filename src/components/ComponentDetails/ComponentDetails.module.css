@@ -4,10 +4,11 @@
   height: 0;
   height: 52px;
   overflow: hidden;
-  transition: height 0.4s ease-out;
+  transition: height 0.3s ease-out;
+  background: #fff;
 }
 
-.visible {
+.expand {
   height: 240px;
 }
 
@@ -16,7 +17,14 @@
   background-color: transparent;
   position: absolute;
   transform: translateY(-52px);
-  transition: transform .150s ease-out ;
+  opacity: 1;
+  transition: opacity .65s, transform .5s ease-in-out ;
+}
+
+.btn.hidden {
+  opacity: 0;
+  transform: translateY(-16px);
+
 }
 
 .icon {
@@ -46,15 +54,32 @@
 }
 
 
-.visible .btn {
+.expand .btn {
 transform: translateY(-16px);
 }
 
-.visible .icon {
+.expand .icon {
   transform: rotate(180deg);
 }
 
-.visible .details {
+.expand .details {
   opacity: 1;
   overflow: auto;
+}
+
+@media only screen and (max-height: 660px) {
+  .root {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: visible;
+    
+  }
+  .expand {
+    height: 50%;
+    transition: height 0.42s ease-out;
+    z-index: 999;
+
+  }
 }

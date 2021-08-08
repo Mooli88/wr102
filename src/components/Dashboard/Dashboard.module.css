@@ -25,10 +25,10 @@
 .mainSection {
   flex: 1;
   height: auto;
-  min-height: 300px;
+  min-height: 175px;
   align-items: center;
 }
 
-/* .slider {
-
-} */
+.bottomSection {
+  position: relative;
+}
