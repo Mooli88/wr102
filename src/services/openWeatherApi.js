@@ -1,6 +1,6 @@
 const URL = "https://api.openweathermap.org/data/2.5/weather";
 const ICON_URL = "http://openweathermap.org/img/wn";
-const ICONS8_URL = "https://img.icons8.com/ios/50";
+const ICONS8_URL = "https://img.icons8.com/ios/64/000000";
 const WEATHER_ICON_NAME = {
   "01": "sun--v1",
   "02": "partly-cloudy-day--v1",
