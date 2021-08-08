@@ -3,7 +3,7 @@ import chevronUpIcon from "../../icons/chevron-up-icon.svg";
 import useCpuInfo from "../../hooks/useCpuInfo";
 import styles from "./ComponentDetails.module.css";
 
-const { root, btn, icon, details, visible } = styles;
+const { root, btn, icon, details, expand, hidden } = styles;
 const ComponentDetails = (props) => {
   const [isOpenState, setIsOpenState] = useState();
   const { cpuState, cpuTemp } = useCpuInfo({
@@ -11,11 +11,13 @@ const ComponentDetails = (props) => {
     observeCpuTemp: true,
   });
   const toggle = () => setIsOpenState((state) => !state);
+  const isLoading = !(cpuState.brand && cpuTemp.max);
   const { brand, manufacturer } = cpuState;
   const { chipset, cores, max } = cpuTemp;
+
   return (
-    <div className={`${root} ${isOpenState && visible}`}>
-      <button className={btn} onClick={toggle}>
+    <div className={`${root} ${isOpenState ? expand : ""}`}>
+      <button className={`${btn} ${isLoading ? hidden : ""}`} onClick={toggle}>
         <img className={icon} src={chevronUpIcon} alt="chevron" />
       </button>
       <div className={details}>
