@@ -1,11 +1,10 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { useSettingCtx, UNITS } from "../../contexts/settingsContext";
 import styles from "./Units.module.css";
 
 const { root, active } = styles;
 
-const Units = (props) => {
+const Units = () => {
   const { units, changeUnits } = useSettingCtx();
 
   const isMetricUnits = units === UNITS.METRIC;

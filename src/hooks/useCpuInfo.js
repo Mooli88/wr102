@@ -10,13 +10,13 @@ const useCpuInfo = ({ observeCpuTemp, observeCpuInfo }) => {
     electron.getCpuTemp((temperature) => {
       if (observeCpuTemp) setCpuTemp(temperature);
     });
-  }, [observeCpuTemp]);
+  }, [observeCpuTemp, electron]);
 
   useEffect(() => {
     electron.getCpuInfo((info) => {
       if (observeCpuInfo) setCpuState(info);
     });
-  }, [observeCpuTemp]);
+  }, [observeCpuInfo, electron]);
 
   return {
     cpuTemp,

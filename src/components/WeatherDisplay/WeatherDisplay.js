@@ -1,20 +1,18 @@
 import React, { useEffect } from "react";
-import PropTypes from "prop-types";
-import useWeather, { UNITS } from "../../hooks/useWeather";
+import useWeather from "../../hooks/useWeather";
+import Loading from "../Loading/Loading";
 import SearchBar from "../SearchBar/SearchBar";
 import styles from "./WeatherDisplay.module.css";
-import Loading from "../Loading/Loading";
 
 const { root, weatherTemp, weatherTempVal, weatherCondition } = styles;
 
-const WeatherDisplay = (props) => {
-  const { weatherState, getWeatherByCityName, changeUnits, loadingState } =
-    useWeather();
+const WeatherDisplay = () => {
+  const { weatherState, getWeatherByCityName, loadingState } = useWeather();
   const { weather, temp } = weatherState;
 
   useEffect(() => {
     getWeatherByCityName({ city: "swindon" });
-  }, []);
+  }, [getWeatherByCityName]);
 
   return (
     <div className={root}>
@@ -23,10 +21,10 @@ const WeatherDisplay = (props) => {
       ) : (
         <div className={weatherTemp}>
           <div className={weatherCondition}>
-            <img src={weather.icon} />
+            <img src={weather.icon} alt={weather.main} title={weather.main} />
           </div>
           <div className={`${weatherTempVal} text-bg-color--primary`}>
-            {temp.toFixed(1)}°
+            {temp}°
           </div>
         </div>
       )}
@@ -37,7 +35,5 @@ const WeatherDisplay = (props) => {
     </div>
   );
 };
-
-WeatherDisplay.propTypes = {};
 
 export default WeatherDisplay;

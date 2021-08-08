@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import WeatherDisplay from "../WeatherDisplay/WeatherDisplay";
 import ComponentTemp from "../ComponentTemp/ComponentTemp";
 import ComponentDetails from "../ComponentDetails/ComponentDetails";

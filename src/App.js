@@ -1,4 +1,3 @@
-import "./App.css";
 import { useEffect } from "react";
 import Dashboard from "./components/Dashboard/Dashboard";
 import { SettingsProvider } from "./contexts/settingsContext";
