@@ -11,9 +11,9 @@ const Units = () => {
 
   return (
     <div className={root} onClick={changeUnits}>
-      <span className={isMetricUnits && active}>C</span>
+      <span className={isMetricUnits ? active : ""}>C</span>
       <span>/</span>
-      <span className={!isMetricUnits && active}>F</span>°
+      <span className={!isMetricUnits ? active : ""}>F</span>°
     </div>
   );
 };
