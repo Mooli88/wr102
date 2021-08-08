@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { useSettingCtx } from "../contexts/settingsContext";
 import api from "../services/openWeatherApi";
 
@@ -15,36 +15,24 @@ const useWeather = () => {
   const [weatherState, setWeatherState] = useState(INIT_WEATHER_STATE);
   const [loadingState, setLoadingState] = useState(false);
   const { units } = useSettingCtx();
-
-  useEffect(() => {
-    const { id } = weatherState;
-    if (id) {
-      getWeatherData(() => api.getWeatherById(id, units));
-    }
-  }, [units]);
-
-  // Periodically fetch weather
-  useEffect(() => {
-    const { id } = weatherState;
-
-    if (!id) return;
-
-    const timeoutId = setTimeout(() => {
-      getWeatherData(() => api.getWeatherById(id, units));
-    }, ONE_MIN * 60);
-
-    return () => clearTimeout(timeoutId);
-  }, [weatherState]);
-
-  const setWeather = ({ id, name, weather, main: { temp } }) =>
+  const prevUnits = useRef(units);
+  const { id } = weatherState;
+  const setWeather = ({
+    id,
+    name,
+    weather,
+    main: { temp },
+    sys: { country },
+  }) =>
     setWeatherState({
       id,
       name,
-      temp,
+      country,
+      temp: temp.toFixed(1),
       weather,
     });
 
-  const getWeatherData = async (cb) => {
+  const getWeatherData = useCallback(async (cb) => {
     try {
       setLoadingState(true);
       const data = await cb();
@@ -54,15 +42,33 @@ const useWeather = () => {
       alert(error);
     }
     setLoadingState(false);
-  };
+  }, []);
 
-  const getWeatherByCityName = (options) => {
-    const promise = api.getWeatherByCityName({
-      ...options,
-      units,
-    });
-    getWeatherData(() => promise);
-  };
+  const getWeatherByCityName = useCallback(
+    (options) => {
+      const promise = api.getWeatherByCityName({
+        ...options,
+        units,
+      });
+      getWeatherData(() => promise);
+    },
+    [units, getWeatherData]
+  );
+
+  useEffect(() => {
+    if (!id || prevUnits.current === units) return;
+    // Get weather with new units
+    getWeatherData(() => api.getWeatherById(id, units));
+
+    // Periodically fetch weather
+    const timeoutId = setTimeout(() => {
+      getWeatherData(() => api.getWeatherById(id, units));
+    }, ONE_MIN * 60);
+
+    prevUnits.current = units;
+
+    return () => clearTimeout(timeoutId);
+  }, [id, units, getWeatherData]);
 
   return {
     weatherState,
