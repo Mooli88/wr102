@@ -1,0 +1,15 @@
+.root {
+  display: flex;
+  margin: auto;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1;
+}
+.temp {
+  font-size: 96px;
+  padding-left: 0.5em;
+}
+.units {
+  font-size: 32px;
+  padding-left: .5em;
+}

@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
-const { electron } = window;
-
 const useCpuInfo = ({ observeCpuTemp, observeCpuInfo }) => {
-  const [cpuState, setCpuState] = useState();
-  const [cpuTemp, setCpuTemp] = useState();
+  const [cpuState, setCpuState] = useState({});
+  const [cpuTemp, setCpuTemp] = useState({});
+  const { electron } = window;
 
   useEffect(() => {
     electron.getCpuTemp((temperature) => {
