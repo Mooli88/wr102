@@ -9,10 +9,14 @@ const {
 async function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
-    width: 1600,
-    height: 600,
+    width: 452,
+    minWidth: 452,
+    maxWidth: 452,
+    height: 800,
+    maxHeight: 926,
+    minHeight: 692,
+    autoHideMenuBar: true,
     webPreferences: {
-      // enableRemoteModule: true,
       preload: path.join(__dirname, "../electron/preload.js"),
     },
   });
