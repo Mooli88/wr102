@@ -5,7 +5,9 @@ import Menu from "./components/Menu/Menu";
 
 function App() {
   useEffect(() => {
-    window.electron.isAdmin().then((res) => console.log("isAdmin", res));
+    window.electron.isAdmin().then((isAdmin) => {
+      if (!isAdmin) alert("Please make sure to run this app as Admin");
+    });
   }, []);
 
   return (
