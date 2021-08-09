@@ -1,3 +1,4 @@
+require("dotenv").config();
 const { app, BrowserWindow } = require("electron");
 const path = require("path");
 const isDev = require("electron-is-dev");
@@ -23,7 +24,6 @@ async function createWindow() {
 
   // Open the DevTools.
   if (isDev) win.webContents.openDevTools();
-
   return win.loadURL(
     isDev
       ? "http://localhost:3000"
