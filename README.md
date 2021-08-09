@@ -3,11 +3,8 @@
      ⚠️ WARNING: This app been tested in dev mode in Windows environment only.
 
 Ever wonder if your CPU temperature changing with the weather? Wonder no more.
-<p  align="center">
-     <figure>
-          <img src="https://i.ibb.co/cJbKmcs/wr102.jpg" width="335px" align="centre">
-          <figcaption>WR102</figcaption>
-     </figure>
+<p align="center">
+  <img src="https://i.ibb.co/cJbKmcs/wr102.jpg" width="335px" align="centre">
 </p>
 
 
