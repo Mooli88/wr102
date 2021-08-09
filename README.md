@@ -1,11 +1,11 @@
 # [WR-102](https://en.wikipedia.org/wiki/WR_102)
 
-      WARNING: This app been tested in dev mode in Windows environment only.
+     ⚠️ WARNING: This app been tested in dev mode in Windows environment only.
 
 Ever wonder if your CPU temperature changing with the weather? Wonder no more.
 
 <figure  align="center">
-  <img src="https://i.ibb.co/cJbKmcs/wr102.jpg" width="60%" align="centre">
+  <img src="https://i.ibb.co/cJbKmcs/wr102.jpg" width="335px" align="centre">
   <figcaption>WR102</figcaption>
 </figure>
 
