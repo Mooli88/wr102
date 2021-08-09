@@ -4,7 +4,7 @@
 
 Ever wonder if your CPU temperature changing with the weather? Wonder no more.
 
-<figure  align="center">
+<figure  align="center" width="100%">
   <img src="https://i.ibb.co/cJbKmcs/wr102.jpg" width="335px" align="centre">
   <figcaption>WR102</figcaption>
 </figure>
