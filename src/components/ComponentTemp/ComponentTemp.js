@@ -16,13 +16,13 @@ const COMPONENT_ICON = {
 };
 
 const ComponentTemperature = ({ type = TYPE.CPU }) => {
-  const { cpuTemp } = useCpuInfo({ observeCpuTemp: true });
+  const { cpuTemp, convertUnits } = useCpuInfo({ observeCpuTemp: true });
   return (
     <div className={root}>
       <img src={COMPONENT_ICON[type]} alt={type} />
       {cpuTemp?.main ? (
         <span className={`${temp} text-bg-color--primary`}>
-          {cpuTemp.main}°
+          {convertUnits(cpuTemp.main)}°
         </span>
       ) : (
         <Loading />

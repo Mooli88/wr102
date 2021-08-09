@@ -6,7 +6,7 @@ import styles from "./ComponentDetails.module.css";
 const { root, btn, icon, details, expand, hidden } = styles;
 const ComponentDetails = (props) => {
   const [isOpenState, setIsOpenState] = useState();
-  const { cpuState, cpuTemp } = useCpuInfo({
+  const { cpuState, cpuTemp, convertUnits } = useCpuInfo({
     observeCpuInfo: true,
     observeCpuTemp: true,
   });
@@ -36,12 +36,12 @@ const ComponentDetails = (props) => {
           ) : null}
           <li>
             <h4>Max</h4>
-            <span>{max}°</span>
+            <span>{convertUnits(max)}°</span>
           </li>
           {cores?.map((core, i) => (
             <li key={core + i}>
               <h4>Core {i + 1}</h4>
-              <span>{core}°</span>
+              <span>{convertUnits(core)}°</span>
             </li>
           ))}
         </ul>
