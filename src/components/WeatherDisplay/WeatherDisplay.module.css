@@ -1,0 +1,19 @@
+.root {
+  flex: 1;
+  position: relative;
+  text-align: center;
+}
+
+.weatherTemp {
+  display: flex;
+  align-items: center;
+}
+
+.weatherCondition {
+  position: absolute;
+}
+
+.weatherTempVal {
+  font-size: 62px;
+  flex: 1;
+}

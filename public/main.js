@@ -1,26 +1,63 @@
+require("dotenv").config();
 const { app, BrowserWindow } = require("electron");
 const path = require("path");
 const isDev = require("electron-is-dev");
+const {
+  getCpuTemperature,
+  getCpuInfo,
+} = require("../electron/utils/systemInfo");
 
-function createWindow() {
+async function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 452,
+    minWidth: 452,
+    maxWidth: 452,
+    height: 800,
+    maxHeight: 926,
+    minHeight: 692,
+    autoHideMenuBar: true,
     webPreferences: {
-      nodeIntegration: true,
-      enableRemoteModule: true,
+      preload: path.join(__dirname, "../electron/preload.js"),
     },
   });
 
-  win.loadURL(
+  // Open the DevTools.
+  if (isDev) win.webContents.openDevTools();
+  return win.loadURL(
     isDev
       ? "http://localhost:3000"
       : `file://${path.join(__dirname, "../build/index.html")}`
   );
 }
 
-app.on("ready", createWindow);
+// TODO: Move to a more appropriate place
+async function runJobs() {
+  const win =
+    BrowserWindow.getFocusedWindow() ?? BrowserWindow.getAllWindows()[0];
+
+  const emitCpuInfo = async () => {
+    const info = await getCpuInfo();
+    win.webContents.send("cpu-info", info);
+  };
+  const emitCpuTemp = async () => {
+    const temp = await getCpuTemperature();
+    win.webContents.send("cpu-temp", temp);
+  };
+
+  Promise.all([]);
+  await emitCpuInfo();
+  await emitCpuTemp();
+
+  setTimeout(() => {
+    runJobs();
+  }, 3000);
+}
+
+app.on("ready", async () => {
+  await createWindow();
+  runJobs();
+});
 
 // Quit when all windows are closed.
 app.on("window-all-closed", function () {

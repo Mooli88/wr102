@@ -1,0 +1,18 @@
+.root {
+  display: inline;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0 0.2rem;
+  color: var(--text-color--generic);
+  font-weight: bold;
+}
+
+.root > span {
+  padding: 0.2em;
+  transition: font-size 0.25s ease;
+}
+
+.active {
+  color: #000;
+  font-size: 24px;
+}
